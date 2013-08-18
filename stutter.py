@@ -14,7 +14,7 @@ class Stutter(object):
         for offset in range(0, 1552492, step):
             session = self.Session()
             try:
-                for article in session.query(Article).order_by(Article.id)[offset: step]:
+                for article in session.query(Article).order_by(Article.id)[offset: offset+step]:
                     article.segmented=jieba.cut(article.content)
                 session.commit()
             except:
