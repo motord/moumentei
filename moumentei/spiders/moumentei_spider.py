@@ -18,15 +18,15 @@ class MoumenteiSpider(BaseSpider):
     def parse(self, response):
         hxs = HtmlXPathSelector(response)
         items=[]
+        item= MoumenteiItem()
+        item['url'] = response.url
         try:
-            item= MoumenteiItem()
-            item['url'] = response.url
             item['author'] = hxs.select('//li[@class="fl"]/text()').extract()[0]
             item['published_at'] = hxs.select('//li[@class="fr date"]/text()').extract()[0]
-            item['content'] = hxs.select('//div[@class="contentBox"]/p/text()').extract()[0]
-            item['like'] = hxs.select('//li[@class="con_like"]/a/text()').extract()[0]
-            item['dislike'] = hxs.select('//li[@class="con_unlike"]/a/text()').extract()[0]
-            items.append(item)
         except:
             pass
+        item['content'] = hxs.select('//div[@class="contentBox"]/p/text()').extract()[0]
+        item['like'] = hxs.select('//li[@class="con_like"]/a/text()').extract()[0]
+        item['dislike'] = hxs.select('//li[@class="con_unlike"]/a/text()').extract()[0]
+        items.append(item)
         return items
