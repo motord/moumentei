@@ -26,7 +26,10 @@ class MoumenteiSpider(BaseSpider):
         except:
             pass
         item['content'] = hxs.select('//div[@class="contentBox"]/p/text()').extract()[0]
-        item['like'] = hxs.select('//li[@class="con_like"]/a/text()').extract()[0]
-        item['dislike'] = hxs.select('//li[@class="con_unlike"]/a/text()').extract()[0]
+        try:
+            item['like'] = hxs.select('//li[@class="con_like"]/a/text()').extract()[0]
+            item['dislike'] = hxs.select('//li[@class="con_unlike"]/a/text()').extract()[0]
+        except:
+            pass
         items.append(item)
         return items
